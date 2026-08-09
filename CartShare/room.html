@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Room · CartShare</title>
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div id="app-shell" class="no-print">
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="app-header">
+    <div class="container app-header-inner">
+      <div class="brand">
+        <img src="assets/logo.svg" width="30" height="30" alt="" />
+        <span>CartShare</span>
+      </div>
+
+      <div class="room-badge">
+        <span>ROOM</span>
+        <span class="code" id="room-code-display">------</span>
+        <button id="copy-code-btn" type="button">Copy</button>
+      </div>
+
+      <div class="who-am-i">
+        <span class="avatar-dot" id="me-avatar">?</span>
+        <span id="me-name">—</span>
+      </div>
+
+      <div class="header-actions">
+        <button class="btn btn-ghost" id="leave-room-btn" type="button">Leave room</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== MAIN ===================== -->
+  <main class="container app-main">
+
+    <!-- LEFT COLUMN: cart -->
+    <div class="main-col">
+
+      <section class="card" aria-labelledby="add-item-heading">
+        <div class="card-title">
+          <h2 id="add-item-heading">Add to the shared cart</h2>
+        </div>
+        <form id="add-item-form" class="add-item-form" novalidate>
+          <div class="field">
+            <label for="item-name">Item</label>
+            <input type="text" id="item-name" placeholder="e.g. Paper towels" autocomplete="off" required />
+          </div>
+          <div class="field">
+            <label for="item-qty">Qty</label>
+            <input type="number" id="item-qty" min="1" step="1" value="1" required />
+          </div>
+          <div class="field">
+            <label for="item-price">Price (USD)</label>
+            <input type="number" id="item-price" min="0" step="0.01" placeholder="0.00" required />
+          </div>
+          <button type="submit" class="btn btn-primary">Add item</button>
+        </form>
+        <div class="field-error" id="add-item-error"></div>
+      </section>
+
+      <section class="card" aria-labelledby="threshold-heading">
+        <div class="card-title">
+          <h2 id="threshold-heading">Free delivery goal</h2>
+        </div>
+        <div class="threshold">
+          <div class="threshold-row">
+            <span>Cart subtotal</span>
+            <strong id="threshold-current">$0.00</strong>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="threshold-fill" style="width:0%"></div>
+          </div>
+          <p class="threshold-msg" id="threshold-msg"></p>
+        </div>
+      </section>
+
+      <section class="card" aria-labelledby="cart-heading">
+        <div class="card-title">
+          <h2 id="cart-heading">Shared cart</h2>
+          <span class="count" id="cart-count">0 items</span>
+        </div>
+
+        <ul class="cart-list" id="cart-list"></ul>
+
+        <div class="empty-state" id="cart-empty" hidden>
+          <span class="glyph">🧺</span>
+          The cart's empty — add the first item above.
+        </div>
+
+        <div class="cart-footer">
+          <span class="subtotal-label">Subtotal</span>
+          <span class="subtotal-value" id="cart-subtotal">$0.00</span>
+        </div>
+      </section>
+    </div>
+
+    <!-- RIGHT COLUMN: participants + activity -->
+    <aside class="side-col">
+
+      <section class="card" aria-labelledby="participants-heading">
+        <div class="card-title">
+          <h2 id="participants-heading">In this room</h2>
+          <span class="count" id="participants-count">0</span>
+        </div>
+        <ul class="participant-list" id="participants-list"></ul>
+      </section>
+
+      <section class="card" aria-labelledby="activity-heading">
+        <div class="card-title">
+          <h2 id="activity-heading">Live activity</h2>
+        </div>
+        <ul class="activity-list" id="activity-list" aria-live="polite"></ul>
+      </section>
+
+      <div class="print-cta">
+        <button class="btn btn-primary" id="print-receipt-btn" type="button">🧾 Print / generate receipt</button>
+      </div>
+    </aside>
+
+  </main>
+</div>
+
+<!-- ===================== PRINTABLE RECEIPT ===================== -->
+<div class="receipt-sheet" id="receipt-sheet">
+  <div class="receipt-paper">
+    <h2>CartShare</h2>
+    <p class="receipt-sub">Room <span id="r-code"></span> &middot; <span id="r-datetime"></span></p>
+    <hr class="receipt-hr" />
+
+    <div class="receipt-items" id="r-items"></div>
+
+    <hr class="receipt-hr" />
+    <div class="receipt-row receipt-total">
+      <span>SUBTOTAL</span>
+      <span id="r-subtotal"></span>
+    </div>
+
+    <div class="receipt-status" id="r-status"></div>
+
+    <hr class="receipt-hr" />
+    <p class="receipt-sub" style="margin-bottom:6px;">SPLIT EQUALLY (<span id="r-participant-count"></span> people)</p>
+    <div class="receipt-row"><span>Per person</span><span id="r-split-equal"></span></div>
+
+    <hr class="receipt-hr" />
+    <p class="receipt-sub" style="margin-bottom:6px;">ADDED BY</p>
+    <div id="r-by-person"></div>
+
+    <hr class="receipt-hr" />
+    <p class="receipt-foot">Audit ID <span id="r-audit-id"></span><br />Generated by CartShare — thanks for coordinating!</p>
+  </div>
+</div>
+
+<div class="toast no-print" id="toast"></div>
+
+<script src="js/storage.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

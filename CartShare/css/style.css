@@ -1,0 +1,810 @@
+/* =================================================================
+   CartShare — style.css
+   Design language: a shared grocery receipt. The app *is* the tape —
+   torn edges, printed order numbers, ink-stamp accents — because the
+   product's entire payoff is an audit-ready receipt at the end.
+   ================================================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap");
+
+:root {
+  /* ---- color tokens ---- */
+  --paper: #f7f3ea;
+  --paper-dim: #efe8d8;
+  --paper-card: #fffdf8;
+  --ink: #1e2521;
+  --ink-soft: #5b665f;
+  --ink-faint: #93998f;
+  --stamp: #2f6b4f;
+  --stamp-dark: #234f3a;
+  --stamp-tint: #e3ede6;
+  --coral: #b23a2f;
+  --coral-tint: #f5e3e0;
+  --thread: #c9a227;
+  --line: #ddd4bd;
+
+  /* ---- type tokens ---- */
+  --font-display: "Space Grotesk", "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+  --font-body: "IBM Plex Sans", "Segoe UI", sans-serif;
+
+  /* ---- layout tokens ---- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --shadow-card: 0 1px 0 var(--line), 0 10px 24px -18px rgba(30, 37, 33, 0.45);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--paper);
+  background-image: radial-gradient(var(--line) 0.6px, transparent 0.6px);
+  background-size: 22px 22px;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  margin: 0;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--stamp-dark);
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+button {
+  font-family: inherit;
+}
+
+/* visible focus ring everywhere, respects keyboard users */
+:focus-visible {
+  outline: 2px solid var(--stamp);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--stamp-dark);
+}
+
+/* =============== buttons =============== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1.5px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 11px 20px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.12s ease, color 0.12s ease;
+}
+.btn:hover {
+  transform: translateY(-1px);
+}
+.btn:active {
+  transform: translateY(0);
+}
+.btn-primary {
+  background: var(--stamp);
+  border-color: var(--stamp);
+  color: var(--paper-card);
+}
+.btn-primary:hover {
+  background: var(--stamp-dark);
+  border-color: var(--stamp-dark);
+}
+.btn-ghost {
+  border-color: var(--line);
+  color: var(--ink-soft);
+}
+.btn-ghost:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.btn-danger {
+  border-color: transparent;
+  color: var(--coral);
+  padding: 6px 10px;
+  font-size: 0.82rem;
+}
+.btn-danger:hover {
+  background: var(--coral-tint);
+}
+.btn-block {
+  width: 100%;
+}
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* =============== form controls =============== */
+label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper-card);
+  color: var(--ink);
+  font-size: 0.96rem;
+  font-family: var(--font-body);
+}
+input.mono-input {
+  font-family: var(--font-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+input:focus {
+  border-color: var(--stamp);
+}
+.field-error {
+  color: var(--coral);
+  font-size: 0.8rem;
+  margin-top: 6px;
+  min-height: 1em;
+}
+
+/* =================================================================
+   LOGIN PAGE (index.html)
+   ================================================================= */
+.login-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-header {
+  padding: 22px 0 0;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.brand img {
+  display: block;
+}
+
+.login-main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 48px;
+  align-items: center;
+  padding: 48px 0 64px;
+}
+
+.hero-copy h1 {
+  font-size: clamp(2.1rem, 4vw, 3rem);
+  max-width: 12ch;
+}
+.hero-copy .lede {
+  margin-top: 16px;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  max-width: 46ch;
+  line-height: 1.55;
+}
+
+.pain-points {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pain-point {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+.pain-point .mark {
+  font-family: var(--font-mono);
+  color: var(--coral);
+  font-weight: 600;
+}
+
+.how-strip {
+  margin-top: 36px;
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+.how-step {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  max-width: 190px;
+}
+.how-step .num {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--stamp);
+  border: 1.5px solid var(--stamp);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+}
+.how-step p {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  line-height: 1.4;
+}
+
+/* the receipt-shaped auth card */
+.ticket {
+  position: relative;
+  background: var(--paper-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 30px 28px 26px;
+}
+.ticket::before,
+.ticket::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 12px;
+  background-image: linear-gradient(135deg, var(--paper) 50%, transparent 50%),
+    linear-gradient(45deg, var(--paper) 50%, transparent 50%);
+  background-size: 16px 16px;
+  background-repeat: repeat-x;
+}
+.ticket::before {
+  top: -1px;
+  background-position: bottom;
+}
+.ticket::after {
+  bottom: -1px;
+  background-position: top;
+}
+
+.ticket-head {
+  text-align: center;
+  padding-bottom: 16px;
+  margin-bottom: 20px;
+  border-bottom: 1.5px dashed var(--line);
+}
+.ticket-head .eyebrow {
+  display: block;
+}
+.ticket-head h2 {
+  font-size: 1.3rem;
+  margin-top: 4px;
+}
+
+.tabs {
+  display: flex;
+  border: 1.5px solid var(--ink);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: 22px;
+}
+.tab {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 10px 8px;
+  font-weight: 600;
+  font-size: 0.86rem;
+  cursor: pointer;
+  color: var(--ink-soft);
+  border-right: 1.5px solid var(--ink);
+}
+.tab:last-child {
+  border-right: none;
+}
+.tab[aria-selected="true"] {
+  background: var(--ink);
+  color: var(--paper-card);
+}
+
+.tab-panel[hidden] {
+  display: none;
+}
+
+.helper-text {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  margin-top: -8px;
+  margin-bottom: 16px;
+}
+
+/* =================================================================
+   ROOM PAGE (room.html)
+   ================================================================= */
+.app-header {
+  border-bottom: 1.5px solid var(--ink);
+  background: var(--paper-dim);
+}
+.app-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 0;
+  flex-wrap: wrap;
+}
+
+.room-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+}
+.room-badge .code {
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  font-size: 1rem;
+}
+.room-badge button {
+  background: none;
+  border: 1px solid var(--paper);
+  color: var(--paper);
+  border-radius: 4px;
+  font-size: 0.7rem;
+  padding: 3px 7px;
+  cursor: pointer;
+  font-family: var(--font-mono);
+}
+
+.who-am-i {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.avatar-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  flex: none;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.app-main {
+  padding: 28px 0 60px;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+  align-items: start;
+}
+
+.card {
+  background: var(--paper-card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 22px;
+}
+.card + .card {
+  margin-top: 20px;
+}
+.card-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.card-title h2 {
+  font-size: 1.05rem;
+}
+.card-title .count {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+}
+
+/* add item form */
+.add-item-form {
+  display: grid;
+  grid-template-columns: 1fr 90px 120px auto;
+  gap: 12px;
+  align-items: end;
+}
+.add-item-form .field {
+  margin-bottom: 0;
+}
+
+/* threshold progress */
+.threshold {
+  margin-top: 4px;
+}
+.threshold-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  margin-bottom: 8px;
+  color: var(--ink-soft);
+}
+.threshold-row strong {
+  color: var(--ink);
+  font-family: var(--font-mono);
+}
+.progress-track {
+  height: 10px;
+  background: var(--paper-dim);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--stamp);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+.progress-fill.met {
+  background: var(--stamp);
+}
+.threshold-msg {
+  margin-top: 8px;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+.threshold-msg.met {
+  color: var(--stamp-dark);
+  font-weight: 600;
+}
+
+/* cart items */
+.cart-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.cart-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--line);
+}
+.cart-row:last-child {
+  border-bottom: none;
+}
+.cart-row .initials {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.cart-row .item-name {
+  flex: 1;
+  min-width: 0;
+}
+.cart-row .item-name .name {
+  font-weight: 600;
+  display: block;
+}
+.cart-row .item-name .meta {
+  font-size: 0.76rem;
+  color: var(--ink-faint);
+}
+.cart-row .qty {
+  font-family: var(--font-mono);
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  width: 46px;
+  text-align: right;
+}
+.cart-row .line-total {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  width: 74px;
+  text-align: right;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 34px 10px;
+  color: var(--ink-faint);
+}
+.empty-state .glyph {
+  font-size: 1.8rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.cart-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1.5px solid var(--ink);
+}
+.cart-footer .subtotal-label {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.cart-footer .subtotal-value {
+  font-family: var(--font-mono);
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+/* sidebar: participants + activity */
+.participant-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.participant-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+}
+.participant-list .you-tag {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--stamp-dark);
+  background: var(--stamp-tint);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.activity-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 360px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.activity-item {
+  display: flex;
+  gap: 10px;
+  font-size: 0.84rem;
+}
+.activity-item .rail {
+  width: 6px;
+  border-radius: 3px;
+  flex: none;
+  background: var(--line);
+}
+.activity-item.add .rail { background: var(--stamp); }
+.activity-item.remove .rail { background: var(--coral); }
+.activity-item.join .rail { background: var(--thread); }
+.activity-item.leave .rail { background: var(--ink-faint); }
+.activity-item .msg {
+  color: var(--ink);
+}
+.activity-item .time {
+  display: block;
+  color: var(--ink-faint);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  margin-top: 2px;
+}
+
+.print-cta {
+  position: sticky;
+  bottom: 20px;
+  margin-top: 20px;
+}
+.print-cta .btn {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+}
+
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--ink);
+  color: var(--paper);
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 50;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* =================================================================
+   RECEIPT (screen: hidden / print: the only thing visible)
+   ================================================================= */
+.receipt-sheet {
+  display: none;
+}
+
+.receipt-paper {
+  width: 340px;
+  margin: 0 auto;
+  background: #fff;
+  color: #111;
+  font-family: var(--font-mono);
+  padding: 22px 20px;
+}
+.receipt-paper h2 {
+  font-family: var(--font-mono);
+  text-align: center;
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+}
+.receipt-sub {
+  text-align: center;
+  font-size: 0.7rem;
+  color: #444;
+  margin-top: 4px;
+}
+.receipt-hr {
+  border: none;
+  border-top: 1px dashed #999;
+  margin: 12px 0;
+}
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  margin: 4px 0;
+}
+.receipt-items .receipt-row .r-name {
+  max-width: 190px;
+}
+.receipt-total {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+.receipt-foot {
+  text-align: center;
+  font-size: 0.68rem;
+  color: #555;
+  margin-top: 14px;
+}
+.receipt-status {
+  text-align: center;
+  font-size: 0.72rem;
+  margin: 10px 0;
+  padding: 6px;
+  border: 1px dashed #999;
+}
+
+/* =============== responsive =============== */
+@media (max-width: 900px) {
+  .login-main {
+    grid-template-columns: 1fr;
+    padding-top: 20px;
+  }
+  .app-main {
+    grid-template-columns: 1fr;
+  }
+  .add-item-form {
+    grid-template-columns: 1fr 1fr;
+  }
+  .add-item-form .btn {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 560px) {
+  .app-header-inner {
+    justify-content: flex-start;
+  }
+  .header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .cart-row .item-name .meta {
+    display: none;
+  }
+}
+
+/* =============== print =============== */
+@media print {
+  body {
+    background: #fff !important;
+    background-image: none !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .receipt-sheet {
+    display: block !important;
+  }
+}
