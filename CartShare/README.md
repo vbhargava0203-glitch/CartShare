@@ -113,8 +113,7 @@ machine) plus the `storage` event (fires in every *other* tab):
 ### Before you submit, fill these in
 
 - GitHub repository link: `______________________________`
-- Live deployment URL: `______________________________`
-- BatchID_FullName: `______________________________`
+- Live deployment URL: `___https://cartshareweb.netlify.app/___________________________`
 
 ---
 
