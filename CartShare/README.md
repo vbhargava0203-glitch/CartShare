@@ -94,25 +94,9 @@ machine) plus the `storage` event (fires in every *other* tab):
 
 ---
 
-## 🚀 Deployment & submission checklist
-
-1. **Repository setup**
-   - Push this folder to a new GitHub repository.
-   - Keep this `README.md` at the repo root (already documents how to
-     run the app locally and what's implemented).
-2. **Live deployment**
-   - Deploy on Vercel, Netlify, or GitHub Pages (static site — no
-     build command needed; publish directory is the repo root).
-   - Confirm the deployed "Room" flow works across two separate
-     browser sessions before submitting the link.
-3. **Naming convention**
-   - Rename your submission folder/repo to `BatchID_FullName_CartShare`
-     before submitting the link through the portal.
-   - Keep the `css/`, `js/`, `assets/` structure exactly as-is.
-
 ### Before you submit, fill these in
 
-- GitHub repository link: `______________________________`
+- GitHub repository link: https://github.com/vbhargava0203-glitch/CartShare
 - Live deployment URL: https://cartshareweb.netlify.app/
 
 ---
