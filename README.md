@@ -94,7 +94,7 @@ machine) plus the `storage` event (fires in every *other* tab):
 
 ---
 
-### Before you submit, fill these in
+### Live
 
 - GitHub repository link: https://github.com/vbhargava0203-glitch/CartShare
 - Live deployment URL: https://cartshareweb.netlify.app/
