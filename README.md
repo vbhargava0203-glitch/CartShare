@@ -35,6 +35,9 @@ frontend prototype into a collaborative, real-time web application.
 
 ---
 
+![CartShare Preview](cartshare-preview.png)
+
+---
 ## 📁 Folder structure
 
 ```
@@ -109,4 +112,3 @@ room access, and a monospace type (IBM Plex Mono) for room codes, prices,
 and the printed receipt itself, paired with Space Grotesk for headings
 and IBM Plex Sans for body text.
 
-![CartShare Preview](cartshare-preview.png)
